@@ -1,4 +1,4 @@
-import type { MouseEvent, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as MuiLink } from '@mui/material';
 import type { CustomCellRendererProps } from 'ag-grid-react';
@@ -51,9 +51,4 @@ export function LinkCellRenderer<TData>(params: LinkCellRendererParams<TData>): 
   }
 
   return <span>{value}</span>;
-}
-
-/** 避免點擊連結時意外觸發 ag-Grid 的 row click（如果 Feature 有註冊 onRowClicked）。 */
-export function stopRowClickPropagation(event: MouseEvent): void {
-  event.stopPropagation();
 }

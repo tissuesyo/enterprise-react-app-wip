@@ -16,7 +16,9 @@ const DATE_TIME_FORMATTER = new Intl.DateTimeFormat('zh-TW', {
   hour12: false,
 });
 
-export function formatDateTime(value: string | number | Date | null | undefined): string | undefined {
+export function formatDateTime(
+  value: string | number | Date | null | undefined,
+): string | undefined {
   if (value === null || value === undefined || value === '') return undefined;
   const date = value instanceof Date ? value : new Date(value);
   if (Number.isNaN(date.getTime())) return undefined;

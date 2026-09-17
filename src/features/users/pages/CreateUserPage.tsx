@@ -22,7 +22,9 @@ export function CreateUserPage(): ReactNode {
       onSuccess: () => {
         // 成功訊息用 navigation state 帶到 /users 顯示，而不是在這個即將卸載的頁面上開 Snackbar
         // ——那樣使用者根本來不及看到就已經跳轉了。
-        navigate('/users', { state: { userCreated: true } satisfies UserListLocationState });
+        // navigate() 在 React Router 7 回傳 `void | Promise<void>`（為了支援 View Transitions），
+        // 這裡不需要等待它完成，用 `void` 明確表示「刻意不處理這個 Promise」。
+        void navigate('/users', { state: { userCreated: true } satisfies UserListLocationState });
       },
       // 失敗時刻意「不」navigate、也不清空表單，讓使用者可以照原本填的內容修正後重試。
     });

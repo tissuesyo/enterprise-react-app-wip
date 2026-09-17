@@ -29,7 +29,14 @@ export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorB
   override render(): ReactNode {
     if (this.state.error) {
       return (
-        <Box sx={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            minHeight: '100vh',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
           <ErrorState
             title="應用程式發生錯誤"
             description="請重新整理頁面；如果問題持續發生，請聯絡系統管理員。"

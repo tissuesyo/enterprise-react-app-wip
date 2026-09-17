@@ -3,7 +3,8 @@ import { IconButton, Tooltip } from '@mui/material';
 import type { SvgIconComponent } from '@mui/icons-material';
 import type { CustomCellRendererProps } from 'ag-grid-react';
 
-export interface IconTooltipCellRendererParams<TData> extends CustomCellRendererProps<TData, unknown> {
+export interface IconTooltipCellRendererParams<TData>
+  extends CustomCellRendererProps<TData, unknown> {
   icon: SvgIconComponent;
   tooltip: string | ((row: TData) => string);
   ariaLabel: string | ((row: TData) => string);
@@ -11,10 +12,7 @@ export interface IconTooltipCellRendererParams<TData> extends CustomCellRenderer
   disabled?: boolean | ((row: TData) => boolean);
 }
 
-function resolve<TData, TResult>(
-  value: TResult | ((row: TData) => TResult),
-  row: TData,
-): TResult {
+function resolve<TData, TResult>(value: TResult | ((row: TData) => TResult), row: TData): TResult {
   return typeof value === 'function' ? (value as (row: TData) => TResult)(row) : value;
 }
 

@@ -14,10 +14,8 @@ export interface FormSelectOption<TValue extends string | number> {
   label: string;
 }
 
-export interface FormSelectProps<
-  TFieldValues extends FieldValues,
-  TValue extends string | number,
-> extends Omit<SelectProps, 'name' | 'error' | 'value' | 'onChange' | 'onBlur'> {
+export interface FormSelectProps<TFieldValues extends FieldValues, TValue extends string | number>
+  extends Omit<SelectProps, 'name' | 'error' | 'value' | 'onChange' | 'onBlur'> {
   name: FieldPath<TFieldValues>;
   control: Control<TFieldValues>;
   label: string;
@@ -48,13 +46,7 @@ export function FormSelect<TFieldValues extends FieldValues, TValue extends stri
       render={({ field, fieldState }) => (
         <FormControl fullWidth error={Boolean(fieldState.error)} required={required}>
           <InputLabel id={labelId}>{label}</InputLabel>
-          <Select
-            {...rest}
-            {...field}
-            value={field.value ?? ''}
-            labelId={labelId}
-            label={label}
-          >
+          <Select {...rest} {...field} value={field.value ?? ''} labelId={labelId} label={label}>
             {options.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}

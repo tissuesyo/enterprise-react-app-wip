@@ -21,13 +21,7 @@ export default mergeConfig(
       coverage: {
         provider: 'v8',
         reporter: ['text', 'html'],
-        exclude: [
-          'e2e/**',
-          'src/test/**',
-          'src/mocks/**',
-          '**/*.d.ts',
-          '**/*.config.*',
-        ],
+        exclude: ['e2e/**', 'src/test/**', 'src/mocks/**', '**/*.d.ts', '**/*.config.*'],
       },
     },
   }),

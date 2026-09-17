@@ -14,7 +14,8 @@ export interface CellAction<TData> {
   onClick: (row: TData) => void;
 }
 
-export interface ActionButtonsCellRendererParams<TData> extends CustomCellRendererProps<TData, unknown> {
+export interface ActionButtonsCellRendererParams<TData>
+  extends CustomCellRendererProps<TData, unknown> {
   actions: CellAction<TData>[];
 }
 

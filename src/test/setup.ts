@@ -34,3 +34,17 @@ if (!window.matchMedia) {
     dispatchEvent: () => false,
   });
 }
+
+// jsdom 完全不執行真正的版面配置（layout），所有元素的 offsetHeight/clientHeight
+// 永遠是 0。ag-Grid 的列虛擬化（row virtualization）需要用容器的實際高度來決定
+// 要渲染幾列，容器高度是 0 時 ag-Grid 會認為「viewport 沒有空間」而不渲染任何 row，
+// 導致測試永遠找不到資料列（這是 ag-Grid 官方也承認的 jsdom 已知限制）。
+// 這裡把 offsetHeight/offsetWidth/clientHeight/clientWidth 固定回傳一個合理的數值，
+// 讓 ag-Grid 在測試環境中誤以為容器有實際尺寸、進而正常渲染列與 overlay。
+const FIXED_LAYOUT_SIZE = 600;
+for (const property of ['offsetHeight', 'offsetWidth', 'clientHeight', 'clientWidth'] as const) {
+  Object.defineProperty(HTMLElement.prototype, property, {
+    configurable: true,
+    value: FIXED_LAYOUT_SIZE,
+  });
+}

@@ -17,7 +17,13 @@ export default tseslint.config(
   {
     languageOptions: {
       parserOptions: {
-        projectService: true,
+        // `e2e/` 有自己的 tsconfig.json，會被 projectService 自動找到；
+        // eslint.config.js 和 scripts/*.mjs 本身不屬於任何 tsconfig include，
+        // 用 allowDefaultProject 讓它們可以用「無型別資訊」的方式被 lint，
+        // 而不是整個專案都不 lint 這幾個檔案。
+        projectService: {
+          allowDefaultProject: ['eslint.config.js', 'scripts/*.mjs'],
+        },
         tsconfigRootDir: import.meta.dirname,
       },
       globals: { ...globals.browser, ...globals.node },
@@ -51,9 +57,14 @@ export default tseslint.config(
     // 設定檔本身用 Node 環境執行，不需要套用瀏覽器/React 規則。
     files: ['*.config.{ts,js}', 'playwright.config.ts', 'vitest.config.ts'],
     languageOptions: { globals: globals.node },
-    rules: {
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-    },
+  },
+  {
+    // eslint.config.js 和 scripts/*.mjs 是用 allowDefaultProject（無型別資訊）解析，
+    // 型別在這種模式下並不可靠，套用官方建議的 disableTypeChecked 關掉整組
+    // type-aware 規則，避免大量因為缺乏真實型別資訊而產生的偽陽性錯誤。
+    files: ['eslint.config.js', 'scripts/*.mjs'],
+    extends: [tseslint.configs.disableTypeChecked],
+    languageOptions: { globals: globals.node },
   },
   {
     files: ['**/*.test.{ts,tsx}', 'src/test/**', 'e2e/**'],
@@ -62,6 +73,9 @@ export default tseslint.config(
       // type-checked 規則在這裡容易產生偽陽性，予以放寬。
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-unsafe-member-access': 'off',
+      // src/test/** 底下的檔案（例如 test-utils.tsx）只會被測試檔案 import，
+      // 不會被 Vite Fast Refresh 追蹤，這條規則在這裡是偽陽性。
+      'react-refresh/only-export-components': 'off',
     },
   },
 );

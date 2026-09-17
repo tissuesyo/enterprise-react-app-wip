@@ -57,7 +57,9 @@ export function initKeycloak(): Promise<KeycloakInitResult> {
 export function registerTokenAutoRefresh(keycloak: Keycloak): void {
   keycloak.onTokenExpired = () => {
     keycloak.updateToken(30).catch(() => {
-      keycloak.login();
+      // login() 會導向登入頁（回傳的 Promise 在瀏覽器導頁前通常不會 resolve），
+      // 這裡不需要等待或處理它的結果，用 `void` 明確表示刻意不處理。
+      void keycloak.login();
     });
   };
 }
@@ -77,5 +79,6 @@ export function mapKeycloakProfileToAuthUser(keycloak: Keycloak): AuthUser {
 }
 
 export function logoutKeycloak(): void {
-  keycloakInstance?.logout({ redirectUri: window.location.origin });
+  // logout() 會導向 Keycloak 的登出頁面再導回來，這裡不需要等待它的 Promise。
+  void keycloakInstance?.logout({ redirectUri: window.location.origin });
 }

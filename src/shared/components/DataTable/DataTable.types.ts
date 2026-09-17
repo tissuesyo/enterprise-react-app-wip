@@ -1,9 +1,4 @@
-import type {
-  ColDef,
-  GetRowIdFunc,
-  GridOptions,
-  GridReadyEvent,
-} from 'ag-grid-community';
+import type { ColDef, GetRowIdFunc, GridOptions, GridReadyEvent } from 'ag-grid-community';
 
 /**
  * DataTable 的公開 props。實際型別以安裝版本的 ag-Grid 官方 TypeScript API 為準——

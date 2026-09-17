@@ -10,12 +10,7 @@ export class ApiError extends Error {
   readonly code: string | undefined;
   readonly details: unknown;
 
-  constructor(params: {
-    message: string;
-    status?: number;
-    code?: string;
-    details?: unknown;
-  }) {
+  constructor(params: { message: string; status?: number; code?: string; details?: unknown }) {
     super(params.message);
     this.name = 'ApiError';
     this.status = params.status;

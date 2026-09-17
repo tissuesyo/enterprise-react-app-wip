@@ -38,9 +38,7 @@ function requireString(key: string, value: string | undefined): string {
 function parseAuthMode(value: string | undefined): AuthMode {
   if (value === 'keycloak') return 'keycloak';
   if (value === 'mock' || value === undefined || value === '') return 'mock';
-  throw new Error(
-    `[env] VITE_AUTH_MODE 只能是 "mock" 或 "keycloak"，目前收到的值是 "${value}"。`,
-  );
+  throw new Error(`[env] VITE_AUTH_MODE 只能是 "mock" 或 "keycloak"，目前收到的值是 "${value}"。`);
 }
 
 function buildEnv(): AppEnv {
@@ -54,10 +52,7 @@ function buildEnv(): AppEnv {
       ? {
           url: requireString('VITE_KEYCLOAK_URL', raw.VITE_KEYCLOAK_URL),
           realm: requireString('VITE_KEYCLOAK_REALM', raw.VITE_KEYCLOAK_REALM),
-          clientId: requireString(
-            'VITE_KEYCLOAK_CLIENT_ID',
-            raw.VITE_KEYCLOAK_CLIENT_ID,
-          ),
+          clientId: requireString('VITE_KEYCLOAK_CLIENT_ID', raw.VITE_KEYCLOAK_CLIENT_ID),
         }
       : {
           url: raw.VITE_KEYCLOAK_URL ?? '',

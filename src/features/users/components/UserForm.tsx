@@ -33,13 +33,7 @@ export function UserForm({ onSubmit, isSubmitting }: UserFormProps): ReactNode {
     >
       <FormTextField name="name" control={control} label="Name" required />
       <FormTextField name="email" control={control} label="Email" type="email" required />
-      <FormSelect
-        name="role"
-        control={control}
-        label="Role"
-        required
-        options={USER_ROLE_OPTIONS}
-      />
+      <FormSelect name="role" control={control} label="Role" required options={USER_ROLE_OPTIONS} />
       <FormTextField name="age" control={control} label="Age" type="number" required />
       {/* 用 MUI Button 內建的 loading prop 防止重複送出，並顯示 loading 中的視覺回饋。 */}
       <AppButton

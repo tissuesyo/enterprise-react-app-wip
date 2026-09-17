@@ -18,12 +18,7 @@ export function PageContainer({ title, actions, children }: PageContainerProps):
   return (
     <Box component="main" sx={{ p: { xs: 2, md: 3 } }}>
       {(title ?? actions) && (
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ mb: 3 }}
-        >
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
           {title && (
             <Typography variant="h5" component="h1" fontWeight={600}>
               {title}

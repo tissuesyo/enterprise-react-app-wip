@@ -18,7 +18,10 @@ describe('DataTable', () => {
     render(
       <DataTable<Row>
         columnDefs={columnDefs}
-        rowData={[{ id: '1', name: 'Alice' }, { id: '2', name: 'Bob' }]}
+        rowData={[
+          { id: '1', name: 'Alice' },
+          { id: '2', name: 'Bob' },
+        ]}
       />,
     );
 

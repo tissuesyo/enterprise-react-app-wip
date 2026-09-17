@@ -10,7 +10,12 @@ export function AppLayout(): ReactNode {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
-      <AppBar position="sticky" color="inherit" elevation={0} sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <AppBar
+        position="sticky"
+        color="inherit"
+        elevation={0}
+        sx={{ borderBottom: 1, borderColor: 'divider' }}
+      >
         <Toolbar sx={{ gap: 3 }}>
           <Typography variant="h6" component="div" fontWeight={700} color="primary.main">
             Enterprise Console

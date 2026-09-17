@@ -11,17 +11,17 @@ AngularJS 系統的新前端基礎。
 
 ## 2. 技術清單
 
-| 分類 | 套件 | 用途 |
-| --- | --- | --- |
-| 核心 | React 19 / TypeScript (strict) / Vite / React Router 7 | SPA 應用程式骨架 |
-| Server State | TanStack Query | API 資料的 fetch / cache / mutation |
-| Client State | Zustand（已安裝，目前 MVP 未使用，見第 17 節） | 跨頁面/跨元件的 UI 狀態 |
-| 表單 | React Hook Form / Zod / @hookform/resolvers | 表單狀態與驗證 |
-| UI | MUI / MUI Icons / ag-Grid React（Enterprise） | 元件庫與表格 |
-| 登入 | keycloak-js | Keycloak 登入（可切換 mock 模式） |
-| API | Axios | 統一的 HTTP client |
-| Mock / 測試 | MSW / Vitest / Testing Library / Playwright | 本機 mock API、單元/元件測試、E2E |
-| 工程品質 | ESLint (Flat Config) / typescript-eslint / eslint-plugin-react-hooks / eslint-plugin-jsx-a11y / Prettier / Husky / lint-staged | Lint、格式化、Commit 檢查 |
+| 分類         | 套件                                                                                                                           | 用途                                |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| 核心         | React 19 / TypeScript (strict) / Vite / React Router 7                                                                         | SPA 應用程式骨架                    |
+| Server State | TanStack Query                                                                                                                 | API 資料的 fetch / cache / mutation |
+| Client State | Zustand（已安裝，目前 MVP 未使用，見第 17 節）                                                                                 | 跨頁面/跨元件的 UI 狀態             |
+| 表單         | React Hook Form / Zod / @hookform/resolvers                                                                                    | 表單狀態與驗證                      |
+| UI           | MUI / MUI Icons / ag-Grid React（Enterprise）                                                                                  | 元件庫與表格                        |
+| 登入         | keycloak-js                                                                                                                    | Keycloak 登入（可切換 mock 模式）   |
+| API          | Axios                                                                                                                          | 統一的 HTTP client                  |
+| Mock / 測試  | MSW / Vitest / Testing Library / Playwright                                                                                    | 本機 mock API、單元/元件測試、E2E   |
+| 工程品質     | ESLint (Flat Config) / typescript-eslint / eslint-plugin-react-hooks / eslint-plugin-jsx-a11y / Prettier / Husky / lint-staged | Lint、格式化、Commit 檢查           |
 
 ## 3. 前置需求
 
@@ -49,13 +49,13 @@ npm run dev
 集中定義在 `src/app/config/env.ts`（型別安全、缺值會丟出清楚的錯誤訊息，而不是
 讓程式在不知名的地方噴出難懂的例外）。
 
-| 變數 | 說明 |
-| --- | --- |
-| `VITE_API_BASE_URL` | API base URL，預設 `/api` |
-| `VITE_ENABLE_MSW` | 是否啟動 MSW（只在 `DEV` 模式生效） |
-| `VITE_AUTH_MODE` | `mock` 或 `keycloak` |
-| `VITE_KEYCLOAK_URL` / `VITE_KEYCLOAK_REALM` / `VITE_KEYCLOAK_CLIENT_ID` | 只有 `VITE_AUTH_MODE=keycloak` 時才是必填 |
-| `VITE_AG_GRID_LICENSE_KEY` | 留空時 ag-Grid Enterprise 仍可啟動，只會顯示官方 evaluation 浮水印 |
+| 變數                                                                    | 說明                                                               |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `VITE_API_BASE_URL`                                                     | API base URL，預設 `/api`                                          |
+| `VITE_ENABLE_MSW`                                                       | 是否啟動 MSW（只在 `DEV` 模式生效）                                |
+| `VITE_AUTH_MODE`                                                        | `mock` 或 `keycloak`                                               |
+| `VITE_KEYCLOAK_URL` / `VITE_KEYCLOAK_REALM` / `VITE_KEYCLOAK_CLIENT_ID` | 只有 `VITE_AUTH_MODE=keycloak` 時才是必填                          |
+| `VITE_AG_GRID_LICENSE_KEY`                                              | 留空時 ag-Grid Enterprise 仍可啟動，只會顯示官方 evaluation 浮水印 |
 
 業務元件一律透過 `import { env } from '@/app/config/env'` 取用，不直接讀
 `import.meta.env`。
@@ -128,12 +128,12 @@ e2e/                # Playwright 測試
 
 ## 12. 各層責任
 
-| 層 | 責任 |
-| --- | --- |
-| `app` | 組裝 Provider、定義路由、集中式 config（env / queryClient / agGrid）。 |
-| `features/<name>` | 該業務功能的頁面、元件、API、Query/Mutation、Schema、型別、商業規則。 |
-| `shared` | 真正不含特定業務概念、且被多個 Feature 使用的能力（UI 元件、API client、auth、theme）。 |
-| `mocks` | 開發/測試用的假後端。 |
+| 層                | 責任                                                                                    |
+| ----------------- | --------------------------------------------------------------------------------------- |
+| `app`             | 組裝 Provider、定義路由、集中式 config（env / queryClient / agGrid）。                  |
+| `features/<name>` | 該業務功能的頁面、元件、API、Query/Mutation、Schema、型別、商業規則。                   |
+| `shared`          | 真正不含特定業務概念、且被多個 Feature 使用的能力（UI 元件、API client、auth、theme）。 |
+| `mocks`           | 開發/測試用的假後端。                                                                   |
 
 ## 13. Feature 依賴規則
 
@@ -213,15 +213,15 @@ ag-Grid 原生 API，`DataTable` 不會替每個功能重新設計一個自訂 p
 
 `src/shared/components/DataTable/cell-renderers/`：
 
-| Renderer | 用途 |
-| --- | --- |
-| `LinkCellRenderer` | 站內（`to`）或站外（`href`）連結，兩者擇一 |
-| `IconTooltipCellRenderer` | 帶 Tooltip 的圖示，只有給 `onIconClick` 才會渲染成可互動的按鈕 |
+| Renderer                    | 用途                                                                      |
+| --------------------------- | ------------------------------------------------------------------------- |
+| `LinkCellRenderer`          | 站內（`to`）或站外（`href`）連結，兩者擇一                                |
+| `IconTooltipCellRenderer`   | 帶 Tooltip 的圖示，只有給 `onIconClick` 才會渲染成可互動的按鈕            |
 | `ActionButtonsCellRenderer` | 一列 Action 按鈕（`hidden` / `disabled` / `tooltip` 皆可用 row 動態決定） |
-| `TooltipCellRenderer` | 文字截斷 + 只有真的 overflow 時才顯示 Tooltip |
-| `TagCellRenderer` | 文字 + 一個或多個 Tag，顏色 mapping 由 Feature 決定 |
-| `DateTimeCellRenderer` | 統一日期時間格式（邏輯集中在 `shared/utils/datetime.ts`） |
-| `EmptyValueCellRenderer` | 統一把 `null`/`undefined`/空字串顯示為 `—` |
+| `TooltipCellRenderer`       | 文字截斷 + 只有真的 overflow 時才顯示 Tooltip                             |
+| `TagCellRenderer`           | 文字 + 一個或多個 Tag，顏色 mapping 由 Feature 決定                       |
+| `DateTimeCellRenderer`      | 統一日期時間格式（邏輯集中在 `shared/utils/datetime.ts`）                 |
+| `EmptyValueCellRenderer`    | 統一把 `null`/`undefined`/空字串顯示為 `—`                                |
 
 範例（`UserListPage.tsx` 的 Status 欄位）：
 
@@ -298,3 +298,29 @@ evaluation 行為，不是 bug，也不會讓應用程式崩潰。正式環境�
 **如何知道目前是 mock 還是 keycloak 登入模式？**
 看 `.env` 的 `VITE_AUTH_MODE`；`AppLayout` 右上角會顯示目前登入使用者的名稱，
 mock 模式固定顯示「Demo User」。
+
+## 25. 用 AI（opencode / Claude Code 等）輔助開發
+
+這個專案沒有正式 URD/PRD，且團隊多數成員不熟悉前端開發，因此額外準備了兩份給
+coding agent 使用的設定：
+
+- **`AGENTS.md`**（專案根目錄）：coding agent 的行為規則，包含「這個專案沒有正式
+  文件，需求用一句話 + 驗收條件下達」「嚴格禁止事項（不准新增技術分類的全域資料夾、
+  不准安裝 Redux/Tailwind/第二套 UI library）」「每次改完程式碼要跑
+  `typecheck`/`lint`/`test:run`」等規則。opencode 與大多數支援 `AGENTS.md` 慣例的
+  coding agent 都會自動讀取，不需要額外設定。
+- **`opencode.json`**（專案根目錄）：opencode 的權限設定。把驗證類指令
+  （`npm run typecheck`、`lint`、`test*`、`build`）設為 `allow`，讓 AI 可以自己跑
+  完驗證迴圈不用每次都問；把會改變專案狀態的指令（安裝套件、`git commit`、
+  `git push`）設為 `ask`；把有破壞性的指令（`git reset`、`git clean`、`rm -rf`）
+  設為 `deny`。實際欄位名稱以 opencode 目前版本的文件為準，升級 opencode 後建議
+  對照官方文件確認欄位是否變動。
+
+給不熟前端的人下指令時，建議照這個格式，讓 AI 對應到既有架構模式：
+
+```text
+在 users 這個 Feature 旁邊新增一個 orders Feature，
+列表頁顯示 Order ID、客戶名稱、金額、狀態，
+狀態用跟 users 的 status 一樣的 Tag 樣式呈現，
+新增頁只要 客戶名稱 + 金額 兩個欄位就好。
+```

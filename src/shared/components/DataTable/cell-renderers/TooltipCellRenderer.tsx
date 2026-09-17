@@ -13,9 +13,7 @@ export interface TooltipCellRendererParams<TData> extends CustomCellRendererProp
  * 長文字截斷 + 只有真的 overflow 時才顯示 Tooltip。
  * 用 ResizeObserver 判斷實際渲染高度/寬度是否超過容器，避免「文字明明沒有被截斷，滑鼠移過去卻跳出 Tooltip」的體驗問題。
  */
-export function TooltipCellRenderer<TData>(
-  params: TooltipCellRendererParams<TData>,
-): ReactNode {
+export function TooltipCellRenderer<TData>(params: TooltipCellRendererParams<TData>): ReactNode {
   const { value, data, tooltipContent, maxLines = 1 } = params;
   const textRef = useRef<HTMLSpanElement>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);

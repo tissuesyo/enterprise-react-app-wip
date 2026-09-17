@@ -49,7 +49,9 @@ export function UserListPage(): ReactNode {
   function dismissSuccess(): void {
     setSuccessOpen(false);
     // 清掉 navigation state，避免使用者重新整理這個頁面時 Snackbar 又跳出來一次。
-    navigate(location.pathname, { replace: true, state: null });
+    // navigate() 回傳 `void | Promise<void>`（React Router 7 的 View Transitions 支援），
+    // 這裡不需要等待完成，用 `void` 明確表示「刻意不處理這個 Promise」。
+    void navigate(location.pathname, { replace: true, state: null });
   }
 
   const columnDefs = useMemo<ColDef<User>[]>(
@@ -86,7 +88,9 @@ export function UserListPage(): ReactNode {
             {
               id: 'view',
               label: 'View',
-              onClick: (row: User) => navigate(`/users/${row.id}`),
+              // CellAction.onClick 要求回傳 void；navigate() 回傳 `void | Promise<void>`，
+              // 用 `void` 把這個呼叫式的回傳值丟棄，讓箭頭函式本身仍然是 void 回傳。
+              onClick: (row: User) => void navigate(`/users/${row.id}`),
             },
             {
               id: 'delete',
@@ -116,7 +120,7 @@ export function UserListPage(): ReactNode {
     <PageContainer
       title="Users"
       actions={
-        <AppButton startIcon={<AddIcon />} onClick={() => navigate('/users/new')}>
+        <AppButton startIcon={<AddIcon />} onClick={() => void navigate('/users/new')}>
           Create User
         </AppButton>
       }
@@ -134,8 +138,8 @@ export function UserListPage(): ReactNode {
         <DialogTitle>Delete {stubDialogUser?.name}?</DialogTitle>
         <DialogContent>
           <Typography variant="body2" color="text.secondary">
-            這是示範用的 Delete 確認 Dialog。MVP 尚未提供對應的 Delete API，
-            實際專案應在這裡串接 features/users/api 底下新增的 delete mutation。
+            這是示範用的 Delete 確認 Dialog。MVP 尚未提供對應的 Delete API， 實際專案應在這裡串接
+            features/users/api 底下新增的 delete mutation。
           </Typography>
         </DialogContent>
         <DialogActions>
