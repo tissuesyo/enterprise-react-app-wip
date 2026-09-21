@@ -18,8 +18,9 @@ export const colorTokens = {
   warning: '#ED6C02',
   success: '#2E7D32',
   divider: '#E3E7EC',
-  // 共用 Modal 標題色：獨立於 primary，不隨主色系調整而變動。
-  modalHeaderBackground: '#3f51b5',
+  // 共用 Modal 標題色：獨立於 primary token，即使數值目前相同，
+  // 改主色系不應該連動改到 Modal 標題色，反之亦然。
+  modalHeaderBackground: '#00647E',
   modalHeaderText: '#ffffffde',
 } as const;
 

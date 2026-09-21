@@ -65,7 +65,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
 
   return (
     <Dialog ref={ref} onClose={() => onClose()} {...dialogProps}>
-      <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <DialogTitle sx={{ justifyContent: 'space-between' }}>
         {title}
         {!hideCloseButton && (
           <IconButton onClick={onClose} size="small" sx={{ color: 'inherit' }} aria-label="close">
