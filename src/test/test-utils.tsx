@@ -1,9 +1,8 @@
 import type { ReactElement, ReactNode } from 'react';
 import { render, type RenderOptions } from '@testing-library/react';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
-import { createQueryClient } from '@/app/config/queryClient';
 import { theme } from '@/shared/theme/theme';
 import { AuthContext } from '@/shared/auth/useAuth';
 import type { AuthContextValue, AuthUser } from '@/shared/auth/auth.types';
@@ -24,14 +23,23 @@ export interface RenderWithProvidersOptions extends Omit<RenderOptions, 'wrapper
 
 /**
  * 測試共用的 render helper：包好 MemoryRouter、QueryClient、MUI Theme、Mock Auth。
- * 每次呼叫都會建立全新的 QueryClient（透過 createQueryClient()），
- * 確保不同測試案例之間的 React Query cache 不會互相污染。
+ *
+ * 每次呼叫都會建立全新的 QueryClient，確保不同測試案例之間的 React Query cache
+ * 不會互相污染。這裡刻意「不」重用正式環境的 `createQueryClient()`——正式環境的
+ * `retry: 1` 預設值會讓錯誤情境的測試多等一次 retry 的 backoff 延遲（約 1 秒），
+ * 使測試變慢、甚至在 CI 上偶發 timeout。測試環境的行為本來就應該和正式環境不同，
+ * 所以這裡用 `retry: false`，讓 MSW 回傳的錯誤能立刻反映成 React Query 的 error 狀態。
  */
 export function renderWithProviders(
   ui: ReactElement,
   { route = '/', authOverrides, ...renderOptions }: RenderWithProvidersOptions = {},
 ) {
-  const queryClient = createQueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { retry: false },
+      mutations: { retry: false },
+    },
+  });
 
   const authValue: AuthContextValue = {
     isAuthenticated: true,

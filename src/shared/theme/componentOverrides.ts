@@ -1,5 +1,5 @@
 import type { Components, Theme } from '@mui/material/styles';
-import { shapeTokens } from '@/shared/theme/tokens';
+import { colorTokens, shapeTokens } from '@/shared/theme/tokens';
 
 /**
  * 集中管理 MUI component overrides。
@@ -32,6 +32,16 @@ export const componentOverrides: Components<Theme> = {
     styleOverrides: {
       root: {
         backgroundImage: 'none',
+      },
+    },
+  },
+  // 全系統的 Dialog 標題色統一由這裡控管，不論是共用 Modal 元件
+  // 或未來直接使用原生 MUI Dialog，標題色都會一致。
+  MuiDialogTitle: {
+    styleOverrides: {
+      root: {
+        backgroundColor: colorTokens.modalHeaderBackground,
+        color: colorTokens.modalHeaderText,
       },
     },
   },

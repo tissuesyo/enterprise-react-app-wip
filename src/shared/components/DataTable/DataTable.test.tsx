@@ -34,9 +34,11 @@ describe('DataTable', () => {
     await waitFor(() => expect(screen.getByText('沒有使用者')).toBeInTheDocument());
   });
 
-  it('shows the loading overlay instead of the empty state while loading', () => {
+  it('shows the loading overlay instead of the empty state while loading', async () => {
     render(<DataTable<Row> columnDefs={columnDefs} rowData={[]} loading />);
-    expect(screen.getByText('載入中…')).toBeInTheDocument();
+    // ag-Grid 的 overlay 是在 grid 初始化完成（非同步）之後才顯示，
+    // 跟另外兩個測試一樣要用 waitFor 等待，不能假設 render() 之後就馬上可見。
+    await waitFor(() => expect(screen.getByText('載入中…')).toBeInTheDocument());
     expect(screen.queryByText('目前沒有資料')).not.toBeInTheDocument();
   });
 });

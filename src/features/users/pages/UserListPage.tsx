@@ -1,19 +1,13 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import type { ColDef } from 'ag-grid-community';
-import {
-  Alert,
-  Dialog,
-  DialogActions,
-  DialogContent,
   DialogTitle,
-  Snackbar,
-  Typography,
-} from '@mui/material';
+import { Alert, Snackbar, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { PageContainer } from '@/shared/components/PageContainer';
 import { AppButton } from '@/shared/components/AppButton';
 import { ErrorState } from '@/shared/components/ErrorState';
+import { Modal } from '@/shared/components/Modal';
 import {
   ActionButtonsCellRenderer,
   DataTable,
@@ -134,20 +128,16 @@ export function UserListPage(): ReactNode {
         pagination
       />
 
-      <Dialog open={Boolean(stubDialogUser)} onClose={() => setStubDialogUser(undefined)}>
-        <DialogTitle>Delete {stubDialogUser?.name}?</DialogTitle>
-        <DialogContent>
-          <Typography variant="body2" color="text.secondary">
-            這是示範用的 Delete 確認 Dialog。MVP 尚未提供對應的 Delete API， 實際專案應在這裡串接
-            features/users/api 底下新增的 delete mutation。
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <AppButton intent="secondary" variant="text" onClick={() => setStubDialogUser(undefined)}>
-            Close
-          </AppButton>
-        </DialogActions>
-      </Dialog>
+      <Modal
+        open={Boolean(stubDialogUser)}
+        onClose={() => setStubDialogUser(undefined)}
+        title={`Delete ${stubDialogUser?.name}?`}
+      >
+        <Typography variant="body2" color="text.secondary">
+          這是示範用的 Delete 確認 Dialog。MVP 尚未提供對應的 Delete API， 實際專案應在這裡串接
+          features/users/api 底下新增的 delete mutation。
+        </Typography>
+      </Modal>
 
       <Snackbar
         open={successOpen}

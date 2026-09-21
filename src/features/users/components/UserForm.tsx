@@ -28,7 +28,11 @@ export function UserForm({ onSubmit, isSubmitting }: UserFormProps): ReactNode {
       component="form"
       spacing={3}
       sx={{ maxWidth: 480 }}
-      onSubmit={handleSubmit(onSubmit)}
+      // React Hook Form 的 handleSubmit 實際上會用 (values, event) 兩個參數呼叫傳入的
+      // handler；這裡用箭頭函式明確只轉傳 values 給 onSubmit，讓 UserFormProps.onSubmit
+      // 的型別（只接受一個參數）跟實際執行時的呼叫方式一致，呼叫端也不會意外依賴到
+      // 第二個參數。
+      onSubmit={handleSubmit((values) => onSubmit(values))}
       noValidate
     >
       <FormTextField name="name" control={control} label="Name" required />

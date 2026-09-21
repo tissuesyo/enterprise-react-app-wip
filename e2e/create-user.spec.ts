@@ -7,11 +7,14 @@ test('creating a user shows a success message and appears in the list', async ({
 
   await page.goto('/users/new');
 
-  await page.getByLabel('Name', { exact: true }).fill('Playwright E2E User');
-  await page.getByLabel('Email', { exact: true }).fill(uniqueEmail);
-  await page.getByLabel('Role', { exact: true }).click();
+  // 必填欄位的 label 實際渲染出來是「Name *」這種帶星號的文字（MUI 的 required
+  // label 慣例），accessible name 會包含那個星號，所以這裡不能用 `exact: true`
+  // 去精準比對 "Name"——那樣永遠比對不到，用預設的部分比對即可。
+  await page.getByLabel('Name').fill('Playwright E2E User');
+  await page.getByLabel('Email').fill(uniqueEmail);
+  await page.getByLabel('Role').click();
   await page.getByRole('option', { name: 'Editor' }).click();
-  await page.getByLabel('Age', { exact: true }).fill('29');
+  await page.getByLabel('Age').fill('29');
 
   await page.getByRole('button', { name: 'Create User' }).click();
 

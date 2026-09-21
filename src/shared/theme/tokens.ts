@@ -8,7 +8,7 @@
  * - 這些值也可以之後匯出給非 MUI 的地方使用（例如純 CSS、Email 樣板）。
  */
 export const colorTokens = {
-  primary: '#1650C2',
+  primary: '#00647E',
   secondary: '#0F9D8C',
   background: '#F5F7FA',
   surface: '#FFFFFF',
@@ -18,6 +18,9 @@ export const colorTokens = {
   warning: '#ED6C02',
   success: '#2E7D32',
   divider: '#E3E7EC',
+  // 共用 Modal 標題色：獨立於 primary，不隨主色系調整而變動。
+  modalHeaderBackground: '#3f51b5',
+  modalHeaderText: '#ffffffde',
 } as const;
 
 export const typographyTokens = {

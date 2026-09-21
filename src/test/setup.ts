@@ -2,6 +2,14 @@ import '@testing-library/jest-dom/vitest';
 import { afterAll, afterEach, beforeAll } from 'vitest';
 import { server } from '@/mocks/server';
 import { resetMockUsers } from '@/mocks/handlers/user.handlers';
+import { initAgGrid } from '@/app/config/agGrid';
+
+// 正式環境是由 <AgGridProvider> 在第一個 DataTable 掛載前呼叫 initAgGrid()
+// 完成 module 註冊；測試環境不會、也不需要每個測試檔案都包一層 AgGridProvider，
+// 所以在全域 setup 呼叫一次即可——initAgGrid() 本身有 guard，重複呼叫是安全的。
+// 沒有這行的話，任何直接 render <DataTable> 的測試都會因為 ag-Grid 找不到
+// ClientSideRowModelModule 而完全不渲染任何列（ag-Grid error #200）。
+initAgGrid();
 
 // 所有測試共用同一個 MSW server；每個測試檔案不需要自己重新 setupServer。
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
